@@ -78,8 +78,8 @@ let glCanvas = document.createElement('canvas');
 let gl = document.getContext('webgl', { xrCompatible: true });
 
 let xrSession = await navigator.xr.requestSession('immersive-vr');
-let xrLayer = new XRWebGLLayer(session, gl);
-session.updateRenderState({ baseLayer: xrLayer });
+let xrLayer = new XRWebGLLayer(xrSession, gl);
+xrSession.updateRenderState({ baseLayer: xrLayer });
 
 // Now presenting to the headset.
 ```
@@ -184,7 +184,7 @@ function onFrame(t, frame) {
   }
 
   // Ensure we're rendering to the layer's backbuffer.
-  let layer = session.renederState.baseLayer;
+  let layer = session.renderState.baseLayer;
   gl.bindFramebuffer(gl.FRAMEBUFFER, layer.framebuffer);
 
   // Loop through each of the views reported by the viewer pose.
